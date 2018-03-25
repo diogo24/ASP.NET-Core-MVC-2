@@ -1,0 +1,63 @@
+﻿@model IEnumerable<string>
+
+@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Language Features</title>
+</head>
+<body>
+    <ol>
+        @foreach (string s in (IEnumerable<string>)ViewBag.TextList)
+        {
+            <li>@s</li>
+        }
+    </ol>
+
+    <ol>
+        @foreach (string s in (IEnumerable<string>)ViewBag.Products)
+        {
+            <li>@s</li>
+        }
+    </ol>
+
+    <ol>
+        @foreach (string s in (IEnumerable<string>)ViewBag.ProductsDic)
+        {
+            <li>@s</li>
+        }
+    </ol>
+
+    <ol>
+        @foreach (string s in (IEnumerable<string>)ViewBag.Totals)
+        {
+            <li>@s</li>
+        }
+    </ol>
+
+    <ol>
+        @foreach (string s in (IEnumerable<string>)ViewBag.CartTotals)
+        {
+            <li>@s</li>
+        }
+    </ol>
+
+    <ol>
+        @foreach (string s in (IEnumerable<string>)ViewBag.FiltersTotals)
+        {
+            <li>@s</li>
+        }
+    </ol>
+
+    <ul>
+        @foreach (string s in Model)
+        {
+            <li>@s</li>
+        }
+    </ul>
+</body>
+</html>
