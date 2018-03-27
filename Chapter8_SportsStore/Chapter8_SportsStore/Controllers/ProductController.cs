@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Chapter8_SportsStore.Controllers
@@ -18,9 +19,11 @@ namespace Chapter8_SportsStore.Controllers
             repository = repo;
         }
 
-        public ViewResult List(int productPage = 1)
+        public ViewResult List(string category, int productPage = 1)
         {
+            Expression<Func<Product, bool>> categoryFilter = p => category == null || p.Category == category;
             var products = repository.Products
+                .Where(categoryFilter)
                 .OrderBy(p => p.ProductID)
                 .Skip((productPage - 1) * PageSize)
                 .Take(PageSize);
@@ -29,13 +32,14 @@ namespace Chapter8_SportsStore.Controllers
             {
                 CurrentPage = productPage,
                 ItemsPerPage = PageSize,
-                TotalItems = repository.Products.Count()
+                TotalItems = repository.Products.Count(categoryFilter)
             };
 
             var productsListVM = new ProductsListViewModel
             {
-                Products = products,
-                PagingInfo = pageInfo
+                Products        = products,
+                PagingInfo      = pageInfo,
+                CurrentCategory = category
             };
 
             return View(productsListVM);
