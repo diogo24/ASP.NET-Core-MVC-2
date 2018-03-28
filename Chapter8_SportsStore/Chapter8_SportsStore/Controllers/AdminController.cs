@@ -1,4 +1,6 @@
-﻿using Chapter8_SportsStore.Models;
+﻿using Chapter8_SportsStore.Data;
+using Chapter8_SportsStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Chapter8_SportsStore.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IProductRepository repository;
@@ -46,6 +49,13 @@ namespace Chapter8_SportsStore.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult SeedDatabase()
+        {
+            SeedData.EnsurePopulated(HttpContext.RequestServices);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
