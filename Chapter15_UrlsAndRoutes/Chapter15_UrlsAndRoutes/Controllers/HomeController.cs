@@ -25,6 +25,7 @@ namespace Chapter15_UrlsAndRoutes.Controllers
                 Action = nameof(CustomVariable),
             };
             r.Data["Id"] = id ?? "<no value>"; // RouteData.Values["id"];
+            r.Data["Url"] = Url.Action("CustomVariable", "Home", new { id = 100 });
             return View("Result", r);
         }
     }
