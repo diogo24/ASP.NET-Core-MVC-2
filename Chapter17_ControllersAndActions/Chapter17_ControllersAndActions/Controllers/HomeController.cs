@@ -36,8 +36,29 @@ namespace Chapter17_ControllersAndActions.Controllers
         //             Content = $"{name} lives in {city}"
         //         };
 
-        public ViewResult ReceiveForm(string name, string city) 
-            => View("Result", $"{name} lives in {city}");
+        //public ViewResult ReceiveForm(string name, string city) 
+        //    => View("Result", $"{name} lives in {city}");
+
+        //[HttpPost]
+        //public RedirectToActionResult ReceiveForm(string name, string city) 
+        //    => RedirectToAction(nameof(Data), new { name, city });
+
+        //public ViewResult Data(string name, string city) => View("Result", $"{name} lives in {city}");
+
+        [HttpPost]
+        public RedirectToActionResult ReceiveForm(string name, string city)
+        {
+            TempData["name"] = name;
+            TempData["city"] = city;
+
+            return RedirectToAction(nameof(Data));
+        }
+        public ViewResult Data()
+        {
+            string name = TempData["name"] as string;
+            string city = TempData["city"] as string;
+            return View("Result", $"{name} lives in {city}");
+        }
     }
 }
 
