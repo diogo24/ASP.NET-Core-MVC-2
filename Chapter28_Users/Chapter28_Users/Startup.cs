@@ -31,7 +31,7 @@ namespace Chapter28_Users
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:SportStoreIdentity:ConnectionString"]));
             services.AddIdentity<AppUser, IdentityRole>(opts => {
                 opts.User.RequireUniqueEmail = true;
-                opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
+                //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
                 opts.Password.RequiredLength = 6;
                 opts.Password.RequireNonAlphanumeric = false;
                 opts.Password.RequireLowercase = false;
@@ -51,6 +51,7 @@ namespace Chapter28_Users
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
+            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
